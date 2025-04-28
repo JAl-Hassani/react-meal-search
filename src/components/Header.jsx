@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import SearchForm from './SearchForm'
 
-export default function Header({ setMeals, setError, setIsLoading }) {
+export default function Header({ setRecipes, setError, setIsLoading }) {
   const [query, setQuery] = useState('')
 
   const handleSearch = async (query) => {
@@ -16,9 +16,9 @@ export default function Header({ setMeals, setError, setIsLoading }) {
       }
       const data = await response.json()
       if (data.meals) {
-        setMeals(data.meals) // Update meals with search results
+        setRecipes(data.meals) // Update recipes with search results
       } else {
-        setMeals([]) // Clear meals if no results are found
+        setRecipes([]) // Clear recipes if no results are found
       }
     } catch (error) {
       console.error('Error performing search:', error)
@@ -31,7 +31,7 @@ export default function Header({ setMeals, setError, setIsLoading }) {
   return (
     <header className="bg-gray-800 text-gray-100 p-4">
       <div className="container mx-auto flex flex-col items-center space-y-4">
-        <h1 className="text-2xl font-bold">MealSearch!</h1>
+        <h1 className="text-2xl font-bold">RecipeSearch!</h1>
         <SearchForm query={query} setQuery={setQuery} onSearch={handleSearch} />
       </div>
     </header>

@@ -21,7 +21,7 @@ export default function SearchForm({ query, setQuery, onSearch }) {
         id="searchField"
         type="text"
         ref={inputRef}
-        placeholder="Search for meals..."
+        placeholder="Search for recipes..."
         value={query} // Bind input value to query state
         onInput={(e) => setQuery(e.target.value)} // Update query state on input change
         className="px-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
