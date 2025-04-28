@@ -1,30 +1,31 @@
 import { useState } from 'react'
 import SearchForm from './SearchForm'
 
-export default function Header({ setMeals, setError, setSearchTerm, setIsLoading }) {
-  const [query, setQuery] = useState('') // Initialize query state
+export default function Header({ setMeals, setError, setIsLoading }) {
+  const [query, setQuery] = useState('')
 
   const handleSearch = async (query) => {
-        setError('') // Clear any previous errors
-    setSearchTerm(query) // Update the search term
-    setIsLoading(true) // Set loading to true
-    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`
+    setIsLoading(true)
+    setError('') // Clear any previous errors
     try {
-      const response = await fetch(url)
+      const response = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`
+      )
       if (!response.ok) {
-        throw new Error(`Error fetching meals: ${response.statusText}`)
+        throw new Error(`Error fetching search results: ${response.statusText}`)
       }
       const data = await response.json()
       if (data.meals) {
-        setMeals(data.meals) // Update meals state with the fetched data
+        setMeals(data.meals) // Update meals with search results
       } else {
-        setMeals([])
-              }
+        setMeals([]) // Clear meals if no results are found
+        setError('No meals found. Try searching for something else!')
+      }
     } catch (error) {
-      console.error('Error fetching meals:', error)
-      setError('Failed to fetch meals. Please try again later.')
+      console.error('Error performing search:', error)
+      setError('Failed to perform search. Please try again later.')
     } finally {
-      setIsLoading(false) // Set loading to false after fetching meals
+      setIsLoading(false) // Set loading to false after fetching
     }
   }
 
