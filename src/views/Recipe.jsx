@@ -26,6 +26,18 @@ export default function Recipe() {
           className="w-full max-w-md mx-auto my-4 rounded-lg"
         />
         <p className="text-gray-100 mt-4">{recipe.strInstructions}</p>
+        {recipe.strYoutube && (
+          <div className="mt-4 text-center">
+            <a
+              href={recipe.strYoutube}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline"
+            >
+              Watch on YouTube!
+            </a>
+          </div>
+        )}
       </div>
     </MainLayout>
   )
