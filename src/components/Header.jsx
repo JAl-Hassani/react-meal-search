@@ -19,7 +19,6 @@ export default function Header({ setMeals, setError, setIsLoading }) {
         setMeals(data.meals) // Update meals with search results
       } else {
         setMeals([]) // Clear meals if no results are found
-        setError('No meals found. Try searching for something else!')
       }
     } catch (error) {
       console.error('Error performing search:', error)
