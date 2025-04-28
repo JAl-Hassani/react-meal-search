@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import SearchForm from './SearchForm'
 
 export default function Header({ setRecipes, setError, setIsLoading }) {
@@ -29,11 +30,38 @@ export default function Header({ setRecipes, setError, setIsLoading }) {
   }
 
   return (
-    <header className="bg-gray-800 text-gray-100 p-4">
-      <div className="container mx-auto flex flex-col items-center space-y-4">
-        <h1 className="text-2xl font-bold">RecipeSearch!</h1>
-        <SearchForm query={query} setQuery={setQuery} onSearch={handleSearch} />
+    <nav className="bg-gray-800 p-4">
+      <div className="container mx-auto flex items-center justify-between">
+        {/* Navigation Links on the Left */}
+        <div className="flex space-x-4">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive ? 'text-indigo-600 p-2' : 'text-white p-2'
+            }
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/ingredients"
+            className={({ isActive }) =>
+              isActive ? 'text-indigo-600 p-2' : 'text-white p-2'
+            }
+          >
+            Ingredients
+          </NavLink>
+        </div>
+
+        {/* Logo in the Center */}
+        <Link to="/">
+          <h1 className="text-2xl text-white font-bold">RecipeSearch!</h1>
+        </Link>
+
+        {/* Search Form on the Right */}
+        <div className="w-1/3">
+          <SearchForm query={query} setQuery={setQuery} onSearch={handleSearch} />
+        </div>
       </div>
-    </header>
+    </nav>
   )
 }
