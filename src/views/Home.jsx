@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Card from '../components/Card'
+import RecipeCard from '../components/RecipeCard'
 import MainLayout from '../layouts/MainLayout'
 
 export default function Home() {
@@ -58,7 +58,7 @@ export default function Home() {
         ) : (
           <div className="grid grid-cols-1 gap-8 pt-4 pl-2 pr-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {recipes.length > 0 ? (
-              recipes.map((recipe) => <Card key={recipe.idMeal} recipe={recipe} />)
+              recipes.map((recipe) => <RecipeCard key={recipe.idMeal} recipe={recipe} />)
             ) : (
               <p className="text-gray-400 text-center col-span-full">
                 No recipes found. Try searching for something else!
