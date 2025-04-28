@@ -31,7 +31,7 @@ export default function Header({ setRecipes, setError, setIsLoading }) {
 
   return (
     <nav className="bg-gray-800 p-4">
-      <div className="container mx-auto flex items-center justify-between">
+      <div className="container mx-auto flex flex-wrap items-center justify-between">
         {/* Navigation Links on the Left */}
         <div className="flex space-x-4">
           <NavLink
@@ -53,12 +53,12 @@ export default function Header({ setRecipes, setError, setIsLoading }) {
         </div>
 
         {/* Logo in the Center */}
-        <Link to="/">
+        <Link to="/" className="mx-auto">
           <h1 className="text-2xl text-white font-bold">RecipeSearch!</h1>
         </Link>
 
         {/* Search Form on the Right */}
-        <div className="w-1/3">
+        <div className="w-full sm:w-1/2 mt-4 sm:mt-0">
           <SearchForm query={query} setQuery={setQuery} onSearch={handleSearch} />
         </div>
       </div>
