@@ -28,7 +28,6 @@ export default function Recipe() {
 
   // Extract tags
   const tags = recipe.strTags ? recipe.strTags.split(',') : []
-  console.log(recipe.strTags)
 
   return (
     <MainLayout>
