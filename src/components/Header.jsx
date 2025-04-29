@@ -18,12 +18,15 @@ export default function Header({ setRecipes, setError, setIsLoading }) {
       const data = await response.json()
       if (data.meals) {
         setRecipes(data.meals) // Update recipes with search results
+        return data.meals // Return the search results
       } else {
         setRecipes([]) // Clear recipes if no results are found
+        return []
       }
     } catch (error) {
       console.error('Error performing search:', error)
       setError('Failed to perform search. Please try again later.')
+      return []
     } finally {
       setIsLoading(false) // Set loading to false after fetching
     }

@@ -1,44 +1,48 @@
 import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import RecipeCard from '../components/RecipeCard'
 import MainLayout from '../layouts/MainLayout'
 
 export default function Home() {
-  const [recipes, setRecipes] = useState([]) // State to store recipes
-  const [isLoading, setIsLoading] = useState(true) // State to track loading status
+  const location = useLocation()
+  const [recipes, setRecipes] = useState(location.state?.searchResults || []) // Use search results if provided
+  const [isLoading, setIsLoading] = useState(false) // State to track loading status
   const [error, setError] = useState('') // State to store error messages
-  const [searchTerm, setSearchTerm] = useState('') // State to track the current search term
+  const [searchTerm, setSearchTerm] = useState(location.state?.searchTerm || '') // Use search term if provided
 
-  // Fetch 6 random recipes when the app loads
+  // Fetch 6 random recipes when the app loads (only if no search results are provided)
   useEffect(() => {
-    const fetchRandomRecipes = async () => {
-      setIsLoading(true)
-      setError('') // Clear any previous errors
-      const randomRecipes = []
-      try {
-        for (let i = 0; i < 6; i++) {
-          const response = await fetch(
-            'https://www.themealdb.com/api/json/v1/1/random.php'
-          )
-          if (!response.ok) {
-            throw new Error(`Error fetching random recipe: ${response.statusText}`)
+    if (!location.state?.searchResults) {
+      const fetchRandomRecipes = async () => {
+        setIsLoading(true)
+        setError('') // Clear any previous errors
+        const randomRecipes = []
+        try {
+          for (let i = 0; i < 6; i++) {
+            const response = await fetch(
+              'https://www.themealdb.com/api/json/v1/1/random.php'
+            )
+            if (!response.ok) {
+              throw new Error(`Error fetching random recipe: ${response.statusText}`)
+            }
+            const data = await response.json()
+            if (data.meals && data.meals.length > 0) {
+              randomRecipes.push(data.meals[0]) // Add the first recipe from the response
+            }
           }
-          const data = await response.json()
-          if (data.meals && data.meals.length > 0) {
-            randomRecipes.push(data.meals[0]) // Add the first recipe from the response
-          }
+          setRecipes(randomRecipes) // Update the state with the fetched recipes
+          setSearchTerm('') // Clear the search term for random recipes
+        } catch (error) {
+          console.error('Error fetching random recipes:', error)
+          setError('Failed to load random recipes. Please try again later.')
+        } finally {
+          setIsLoading(false) // Set loading to false after fetching recipes
         }
-        setRecipes(randomRecipes) // Update the state with the fetched recipes
-        setSearchTerm('') // Clear the search term for random recipes
-      } catch (error) {
-        console.error('Error fetching random recipes:', error)
-        setError('Failed to load random recipes. Please try again later.')
-      } finally {
-        setIsLoading(false) // Set loading to false after fetching recipes
       }
-    }
 
-    fetchRandomRecipes()
-  }, []) // Empty dependency array ensures this runs only once when the component mounts
+      fetchRandomRecipes()
+    }
+  }, [location.state?.searchResults]) // Only run if no search results are provided
 
   return (
     <MainLayout setRecipes={setRecipes} setError={setError} setIsLoading={setIsLoading}>

@@ -1,17 +1,19 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function SearchForm({ query, setQuery, onSearch }) {
   const inputRef = useRef(null)
+  const navigate = useNavigate() // Create a navigate instance
 
   useEffect(() => {
-    if (inputRef.current)
-      inputRef.current.focus()
+    if (inputRef.current) inputRef.current.focus()
   }, [])
-  
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    if (onSearch) {
-      onSearch(query) // Call the onSearch prop with the query
+    if (query.trim() !== '') {
+      const results = await onSearch(query) // Perform the search and get results
+      navigate('/', { state: { searchResults: results, searchTerm: query } }) // Navigate to Home with results
     }
   }
 
