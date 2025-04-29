@@ -35,26 +35,6 @@ export default function Header({ setRecipes, setError, setIsLoading }) {
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex flex-wrap items-center justify-between">
-        {/* Navigation Links on the Left */}
-        <div className="flex space-x-4">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              isActive ? 'text-indigo-600 p-2' : 'text-white p-2'
-            }
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="/ingredients"
-            className={({ isActive }) =>
-              isActive ? 'text-indigo-600 p-2' : 'text-white p-2'
-            }
-          >
-            Ingredients
-          </NavLink>
-        </div>
-
         {/* Logo in the Center */}
         <Link to="/" className="mx-auto">
           <h1 className="text-2xl text-white font-bold">RecipeSearch!</h1>

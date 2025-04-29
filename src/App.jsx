@@ -1,14 +1,12 @@
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import Home from './views/Home'
-import Ingredients from './views/Ingredients'
 import Recipe from './views/Recipe'
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/ingredients" element={<Ingredients />} />
       <Route path="/recipe" element={<Recipe />} />
     </Routes>
   )
