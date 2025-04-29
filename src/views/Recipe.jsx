@@ -26,6 +26,10 @@ export default function Recipe() {
     }
   }
 
+  // Extract tags
+  const tags = recipe.strTags ? recipe.strTags.split(',') : []
+  console.log(recipe.strTags)
+
   return (
     <MainLayout>
       <div className="container mx-auto p-4">
@@ -35,7 +39,25 @@ export default function Recipe() {
           alt={recipe.strMeal}
           className="w-full max-w-md mx-auto my-4 rounded-lg"
         />
-        <h2 className="text-2xl font-bold text-gray-100 mb-4">Instructions</h2>
+
+        {/* Tags Section */}
+        {tags.length > 0 && (
+          <div className="text-center mt-4">
+            <h2 className="text-lg text-gray-100 mb-2">Tags</h2>
+            <div className="flex flex-wrap justify-center space-x-2">
+              {tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="bg-indigo-600 text-white px-3 py-1 rounded-full text-sm"
+                >
+                  {tag.trim()}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <h2 className="text-2xl font-bold text-gray-100 mb-4 mt-8">Instructions</h2>
         <p className="text-gray-100 mt-4">{recipe.strInstructions}</p>
 
         {/* Ingredients Table */}
